@@ -33,6 +33,11 @@ namespace insurranceDemo.Controllers
         }
 
         /// <summary>
+        ///  共用的成功物件
+        /// </summary>
+        private CommonSuccessReponse commonSuccessResponse = new CommonSuccessReponse();
+
+        /// <summary>
         /// 新增保單
         /// </summary>
         /// <param name="name">保單名稱</param>
@@ -44,7 +49,7 @@ namespace insurranceDemo.Controllers
         [Route("AddInsurrance")]
         public HttpResponseMessage AddInsurrance(string name, string description, decimal price) 
         {
-            /// 檢查有沒有重名
+            // 檢查有沒有重名
             foreach (var item in allInsurranceCache)
             {
                 if (item.name == name)
@@ -74,13 +79,12 @@ namespace insurranceDemo.Controllers
             }
         }
 
-
-        [HttpGet]
-        [Route("GetAllInsurrance")]
         /// <summary>
         /// 取得所有保單種類的清單
         /// </summary>
         /// <returns>所有保單種類的清單</returns>
+        [HttpGet]
+        [Route("GetAllInsurrance")]        
         public HttpResponseMessage GetAllInsurrance()
         {
             var result = new List<ClientInsurrance>();
@@ -100,13 +104,11 @@ namespace insurranceDemo.Controllers
         /// <param name="name">保單名稱</param>
         /// <param name="description">保單描述</param>
         /// <param name="price">保單價格</param>
-        /// <returns></returns>
-        
+        /// <returns></returns>        
         [HttpPost]
-        [Route("updateInsurrance")]
-        public HttpResponseMessage updateInsurrance(long id, string name, string description,decimal price)
-        {
-           
+        [Route("UpdateInsurrance")]
+        public HttpResponseMessage UpdateInsurrance(long id, string name, string description,decimal price)
+        {          
 
             var insurrance = getInsurranceBy(id);
             if (insurrance != null)
@@ -127,7 +129,7 @@ namespace insurranceDemo.Controllers
                 try
                 {
                     context.SaveChanges();
-                    return Request.CreateResponse(HttpStatusCode.OK, new CommonSuccessReponse());
+                    return Request.CreateResponse(HttpStatusCode.OK, commonSuccessResponse);
                 }
                 catch (Exception e)
                 {
@@ -140,6 +142,39 @@ namespace insurranceDemo.Controllers
 
             }
 
+        }
+
+
+        /// <summary>
+        /// 刪除保單
+        /// </summary>
+        /// <param name="id">要刪除的保單資料</param>
+        /// <returns>刪除的結果</returns>
+        [HttpPost]
+        [Route("DeleteInsurrance")]
+        public HttpResponseMessage DeleteInsurrance(long id)
+        {
+            var insurrance = getInsurranceBy(id);
+            if(insurrance != null)
+            {
+                insurrance.isDelete = true;
+                try
+                {
+                    context.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, commonSuccessResponse);
+
+                }
+                catch (Exception e)
+                {
+
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+                }
+            }
+            else 
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "要刪除的保單不存在!");
+
+            }
         }
     }
 

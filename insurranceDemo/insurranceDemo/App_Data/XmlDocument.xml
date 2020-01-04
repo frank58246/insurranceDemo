@@ -533,6 +533,11 @@
             資料庫實體
             </summary>
         </member>
+        <member name="F:insurranceDemo.Controllers.InsurranceController.commonSuccessResponse">
+            <summary>
+             共用的成功物件
+            </summary>
+        </member>
         <member name="M:insurranceDemo.Controllers.InsurranceController.AddInsurrance(System.String,System.String,System.Decimal)">
             <summary>
             新增保單
@@ -543,7 +548,13 @@
             <returns>新的保單的id</returns>
             
         </member>
-        <member name="M:insurranceDemo.Controllers.InsurranceController.updateInsurrance(System.Int64,System.String,System.String,System.Decimal)">
+        <member name="M:insurranceDemo.Controllers.InsurranceController.GetAllInsurrance">
+            <summary>
+            取得所有保單種類的清單
+            </summary>
+            <returns>所有保單種類的清單</returns>
+        </member>
+        <member name="M:insurranceDemo.Controllers.InsurranceController.UpdateInsurrance(System.Int64,System.String,System.String,System.Decimal)">
             <summary>
             更新保單的內容
             </summary>
@@ -551,7 +562,14 @@
             <param name="name">保單名稱</param>
             <param name="description">保單描述</param>
             <param name="price">保單價格</param>
-            <returns></returns>
+            <returns></returns>        
+        </member>
+        <member name="M:insurranceDemo.Controllers.InsurranceController.DeleteInsurrance(System.Int64)">
+            <summary>
+            刪除保單
+            </summary>
+            <param name="id">要刪除的保單資料</param>
+            <returns>刪除的結果</returns>
         </member>
         <member name="T:insurranceDemo.Models.ClientCustom">
             <summary>
