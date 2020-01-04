@@ -44,11 +44,50 @@ namespace insurranceDemo.Controllers
             }
         }
 
-        // GET api/values/5
-        public string Get(int id)
+        [HttpPost ]
+        [Route("AddCustom")]
+        /// <summary>
+        /// 新增用戶
+        /// </summary>
+        /// <param name="newCustom">新用戶的資料</param>
+        /// <returns></returns>
+        public HttpResponseMessage AddCustom(string name, bool sex, string identity, string address = "") 
         {
-            return "value";
+           
+
+            var target = context.Custom.Where(c => c.identity == identity).ToList();
+            if (target.Count == 0)
+            {
+                var newCustomer = new Custom();
+                newCustomer.id = 0;
+                newCustomer.name = name;
+                newCustomer.sex = sex;
+                newCustomer.isDelete = false;
+                newCustomer.insuranceList = "";
+                newCustomer.identity = identity;
+                context.Custom.Add(newCustomer);
+                try
+                {
+                    context.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, newCustomer.id);
+
+                }
+                catch (Exception e)
+                {
+                    var message = string.Format("新增會員失敗");
+                    HttpError err = new HttpError(message);
+                    return Request.CreateResponse(HttpStatusCode.NotFound, err);
+                }
+            }
+            else 
+            {
+                var message = string.Format("新增會員失敗，身分證字號錯誤!");
+                HttpError err = new HttpError(message);
+                return Request.CreateResponse(HttpStatusCode.NotFound, err);
+            }
+
         }
+
 
         // POST api/values
         public void Post([FromBody]string value)

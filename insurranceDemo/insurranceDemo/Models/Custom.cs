@@ -12,37 +12,15 @@ namespace insurranceDemo.Models
     using System;
     using System.Collections.Generic;
     
-    /// <summary>
-    /// 客戶的實體
-    /// </summary>
     public partial class Custom
     {
-        /// <summary>
-        /// 資料庫的id(DB自動產生)
-        /// </summary>
         public long id { get; set; }
-
-        /// <summary>
-        /// 客戶的名稱
-        /// </summary>
         public string name { get; set; }
-
-        /// <summary>
-        /// 客戶性別
-        /// </summary>
         public bool sex { get; set; }
-
-        /// <summary>
-        /// 客戶地址
-        /// </summary>
         public string addresss { get; set; }
-
-        /// <summary>
-        /// 建立日期(DB自動產生)
-        /// </summary>
-        public System.DateTime createTime { get; set; }
-
+        public Nullable<System.DateTime> createTime { get; set; }
         public string insuranceList { get; set; }
-        public string isDelete { get; set; }
+        public bool isDelete { get; set; }
+        public string identity { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="InsuranceCompanyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="InsuranceCompanyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Custom">
           <Key>
             <PropertyRef Name="id" />
@@ -13,9 +13,10 @@
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="sex" Type="bit" Nullable="false" />
           <Property Name="addresss" Type="nvarchar" MaxLength="250" />
-          <Property Name="createTime" Type="datetime" Nullable="false" />
+          <Property Name="createTime" Type="datetime" />
           <Property Name="insuranceList" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="isDelete" Type="nchar" MaxLength="10" />
+          <Property Name="isDelete" Type="bit" Nullable="false" />
+          <Property Name="identity" Type="nvarchar" MaxLength="15" Nullable="false" />
         </EntityType>
         <EntityType Name="Insurrance">
           <Key>
@@ -32,8 +33,7 @@
           <EntitySet Name="Custom" EntityType="Self.Custom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Insurrance" EntityType="Self.Insurrance" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InsuranceCompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -45,9 +45,10 @@
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="sex" Type="Boolean" Nullable="false" />
           <Property Name="addresss" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="createTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="createTime" Type="DateTime" Precision="3" />
           <Property Name="insuranceList" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="isDelete" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="isDelete" Type="Boolean" Nullable="false" />
+          <Property Name="identity" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="Insurrance">
           <Key>
@@ -73,6 +74,7 @@
           <EntitySetMapping Name="Custom">
             <EntityTypeMapping TypeName="InsuranceCompanyModel.Custom">
               <MappingFragment StoreEntitySet="Custom">
+                <ScalarProperty Name="identity" ColumnName="identity" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="sex" ColumnName="sex" />
