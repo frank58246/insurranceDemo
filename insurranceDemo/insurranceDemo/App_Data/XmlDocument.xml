@@ -486,6 +486,11 @@
             控制客戶資料的controller
             </summary>
         </member>
+        <member name="F:insurranceDemo.Controllers.CustomController.context">
+            <summary>
+            資料庫實體
+            </summary>
+        </member>
         <member name="M:insurranceDemo.Controllers.CustomController.GetCustomDetail(System.Int32)">
             <summary>
             取得指定id用戶的詳細資料
@@ -522,6 +527,31 @@
             <summary>
             保單相關處理
             </summary>
+        </member>
+        <member name="F:insurranceDemo.Controllers.InsurranceController.context">
+            <summary>
+            資料庫實體
+            </summary>
+        </member>
+        <member name="M:insurranceDemo.Controllers.InsurranceController.AddInsurrance(System.String,System.String,System.Decimal)">
+            <summary>
+            新增保單
+            </summary>
+            <param name="name">保單名稱</param>
+            <param name="description">保單名稱</param>
+            <param name="price">價格</param>
+            <returns>新的保單的id</returns>
+            
+        </member>
+        <member name="M:insurranceDemo.Controllers.InsurranceController.updateInsurrance(System.Int64,System.String,System.String,System.Decimal)">
+            <summary>
+            更新保單的內容
+            </summary>
+            <param name="id">保單的id</param>
+            <param name="name">保單名稱</param>
+            <param name="description">保單描述</param>
+            <param name="price">保單價格</param>
+            <returns></returns>
         </member>
         <member name="T:insurranceDemo.Models.ClientCustom">
             <summary>

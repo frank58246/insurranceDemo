@@ -20,6 +20,9 @@ namespace insurranceDemo.Controllers
             return target.Count > 0 ? target.First() : null;
         }
 
+        /// <summary>
+        /// 資料庫實體
+        /// </summary>
         private InsuranceCompanyEntities context = new InsuranceCompanyEntities();
 
         // GET api/values
