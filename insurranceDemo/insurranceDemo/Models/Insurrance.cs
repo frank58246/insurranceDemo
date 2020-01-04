@@ -15,8 +15,8 @@ namespace insurranceDemo.Models
     public partial class Insurrance
     {
         public long id { get; set; }
-        public long name { get; set; }
-        public int price { get; set; }
+        public string name { get; set; }
+        public decimal price { get; set; }
         public string description { get; set; }
         public System.DateTime createTime { get; set; }
         public bool isDelete { get; set; }

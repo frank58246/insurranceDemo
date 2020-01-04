@@ -18,7 +18,7 @@ namespace insurranceDemo.Models
         public string name { get; set; }
         public bool sex { get; set; }
         public string addresss { get; set; }
-        public Nullable<System.DateTime> createTime { get; set; }
+        public System.DateTime createTime { get; set; }
         public string insuranceList { get; set; }
         public bool isDelete { get; set; }
         public string identity { get; set; }

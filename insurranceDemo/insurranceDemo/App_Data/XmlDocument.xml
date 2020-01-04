@@ -500,6 +500,91 @@
             <param name="id">要刪除會員的Id</param>
             <returns>刪除操作的回應</returns>
         </member>
+        <member name="M:insurranceDemo.Controllers.CustomController.updateCustomDetail(System.Int32,System.String,System.Boolean,System.String)">
+            <summary>
+            更新客戶的基本資料
+            </summary>
+            <param name="id">客戶的id</param>
+            <param name="name">姓名</param>
+            <param name="sex">性別</param>
+            <param name="address">住址</param>
+            <returns></returns>
+        </member>
+        <member name="M:insurranceDemo.Controllers.CustomController.updateCustomInsurrance(System.Int32,System.Int32[])">
+            <summary>
+            更新客戶的保單資料
+            </summary>
+            <param name="id">客戶的id</param>
+            <param name="insurranceList">保單id清單</param>
+            <returns></returns>
+        </member>
+        <member name="T:insurranceDemo.Controllers.InsurranceController">
+            <summary>
+            保單相關處理
+            </summary>
+        </member>
+        <member name="T:insurranceDemo.Models.ClientCustom">
+            <summary>
+            丟給Client端的客戶物件
+            </summary>
+        </member>
+        <member name="F:insurranceDemo.Models.ClientCustom.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="F:insurranceDemo.Models.ClientCustom.IsMale">
+            <summary>
+            是否為男性
+            </summary>
+        </member>
+        <member name="F:insurranceDemo.Models.ClientCustom.Address">
+            <summary>
+            地址
+            </summary>
+        </member>
+        <member name="F:insurranceDemo.Models.ClientCustom.InsurranceList">
+            <summary>
+            保單的清單
+            </summary>
+        </member>
+        <member name="M:insurranceDemo.Models.ClientCustom.#ctor(insurranceDemo.Models.Custom)">
+            <summary>
+            使用資料庫的物件初始化
+            </summary>
+            <param name="serverData">資料庫的model</param>
+        </member>
+        <member name="T:insurranceDemo.Models.ClientInsurrance">
+            <summary>
+            丟給client端的保單物件
+            </summary>
+        </member>
+        <member name="F:insurranceDemo.Models.ClientInsurrance.Id">
+            <summary>
+            id
+            </summary>
+        </member>
+        <member name="F:insurranceDemo.Models.ClientInsurrance.Name">
+            <summary>
+            名稱
+            </summary>
+        </member>
+        <member name="F:insurranceDemo.Models.ClientInsurrance.Price">
+            <summary>
+            價格
+            </summary>
+        </member>
+        <member name="F:insurranceDemo.Models.ClientInsurrance.Description">
+            <summary>
+            保單描述
+            </summary>
+        </member>
+        <member name="M:insurranceDemo.Models.ClientInsurrance.#ctor(insurranceDemo.Models.Insurrance)">
+            <summary>
+            
+            </summary>
+            <param name="serverData"></param>
+        </member>
         <member name="T:insurranceDemo.Models.CommonSuccessReponse">
             <summary>
             呼叫api操作成功的回應

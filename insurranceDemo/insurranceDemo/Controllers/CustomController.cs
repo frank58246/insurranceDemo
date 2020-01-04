@@ -126,6 +126,14 @@ namespace insurranceDemo.Controllers
 
         }
 
+        /// <summary>
+        /// 更新客戶的基本資料
+        /// </summary>
+        /// <param name="id">客戶的id</param>
+        /// <param name="name">姓名</param>
+        /// <param name="sex">性別</param>
+        /// <param name="address">住址</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("updateCustomDetail")]
         public HttpResponseMessage updateCustomDetail(int id, string name, bool sex, string address )                                                          
@@ -153,21 +161,51 @@ namespace insurranceDemo.Controllers
             }
         }
 
-
-
-        // POST api/values
-        public void Post([FromBody]string value)
+        /// <summary>
+        /// 更新客戶的保單資料
+        /// </summary>
+        /// <param name="id">客戶的id</param>
+        /// <param name="insurranceList">保單id清單</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("updateCustomInsurrance")]
+        public HttpResponseMessage updateCustomInsurrance(int id, int[] insurranceList)
         {
+            var custom = getCustomBy(id);
+
+            // 檢查是否給不存在的保單id
+            var allInsuranceId = context.Insurrance.Where(i => ! i.isDelete).Select(i => i.id);
+            foreach (var oneInsurrance  in insurranceList)
+            {
+                if (!allInsuranceId.Contains(oneInsurrance)) 
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, $"請求的保單{oneInsurrance}不在資料庫中!");
+                }
+            }
+
+
+            if (custom != null)
+            {
+                string joinedList = String.Join(", ", insurranceList.ToArray());
+                custom.insuranceList = joinedList;
+                try
+                {
+                    context.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, new CommonSuccessReponse());
+
+                }
+                catch (Exception e)
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "請求的會員不存在!");
+            }
+        
         }
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
     }
 }

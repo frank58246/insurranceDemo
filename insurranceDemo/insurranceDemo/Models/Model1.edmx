@@ -13,7 +13,7 @@
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="sex" Type="bit" Nullable="false" />
           <Property Name="addresss" Type="nvarchar" MaxLength="250" />
-          <Property Name="createTime" Type="datetime" />
+          <Property Name="createTime" Type="datetime" Nullable="false" />
           <Property Name="insuranceList" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="isDelete" Type="bit" Nullable="false" />
           <Property Name="identity" Type="nvarchar" MaxLength="15" Nullable="false" />
@@ -23,8 +23,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="bigint" Nullable="false" />
-          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="price" Type="money" Nullable="false" />
           <Property Name="description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="createTime" Type="datetime" Nullable="false" />
           <Property Name="isDelete" Type="bit" Nullable="false" />
@@ -45,7 +45,7 @@
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="sex" Type="Boolean" Nullable="false" />
           <Property Name="addresss" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="createTime" Type="DateTime" Precision="3" />
+          <Property Name="createTime" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="insuranceList" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="isDelete" Type="Boolean" Nullable="false" />
           <Property Name="identity" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
@@ -55,8 +55,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="Int64" Nullable="false" />
-          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="createTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="isDelete" Type="Boolean" Nullable="false" />
