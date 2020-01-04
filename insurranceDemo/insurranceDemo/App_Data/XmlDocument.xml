@@ -493,5 +493,22 @@
             <param name="id">要查詢的用戶id</param>
             <returns></returns>
         </member>
+        <member name="M:insurranceDemo.Controllers.CustomController.deleteCustomer(System.Int32)">
+            <summary>
+            刪除會員
+            </summary>
+            <param name="id">要刪除會員的Id</param>
+            <returns>刪除操作的回應</returns>
+        </member>
+        <member name="T:insurranceDemo.Models.CommonSuccessReponse">
+            <summary>
+            呼叫api操作成功的回應
+            </summary>
+        </member>
+        <member name="F:insurranceDemo.Models.CommonSuccessReponse.IsSuccess">
+            <summary>
+            是否成功
+            </summary>
+        </member>
     </members>
 </doc>

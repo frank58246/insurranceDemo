@@ -52,14 +52,11 @@ namespace insurranceDemo.Controllers
         /// <param name="newCustom">新用戶的資料</param>
         /// <returns></returns>
         public HttpResponseMessage AddCustom(string name, bool sex, string identity, string address = "") 
-        {
-           
-
+        {          
             var target = context.Custom.Where(c => c.identity == identity).ToList();
             if (target.Count == 0)
             {
                 var newCustomer = new Custom();
-                newCustomer.id = 0;
                 newCustomer.name = name;
                 newCustomer.sex = sex;
                 newCustomer.isDelete = false;
@@ -88,6 +85,39 @@ namespace insurranceDemo.Controllers
 
         }
 
+        /// <summary>
+        /// 刪除會員
+        /// </summary>
+        /// <param name="id">要刪除會員的Id</param>
+        /// <returns>刪除操作的回應</returns>
+        [HttpPost ]
+        [Route("deleteCustomer")]
+        public HttpResponseMessage deleteCustomer(int id)
+        {
+            var target = context.Custom.Where(c => c.id == id && !c.isDelete).ToList();
+            if (target.Count > 0)
+            {
+                var customer = target.First();
+                customer.isDelete = true;
+
+                try
+                {                    
+                    context.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, new CommonSuccessReponse());
+                }
+                catch (Exception e)
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+            
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "請求的會員不存在!");
+
+            }
+
+        }
 
         // POST api/values
         public void Post([FromBody]string value)
