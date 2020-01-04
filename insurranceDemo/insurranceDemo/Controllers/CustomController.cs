@@ -14,6 +14,12 @@ namespace insurranceDemo.Controllers
     public class CustomController : ApiController
     {
 
+        private Custom getCustomBy(int id)
+        {
+            var target = context.Custom.Where(c => c.id == id).ToList();
+            return target.Count > 0 ? target.First() : null;
+        }
+
         private InsuranceCompanyEntities context = new InsuranceCompanyEntities();
 
         // GET api/values
@@ -29,14 +35,14 @@ namespace insurranceDemo.Controllers
         /// <param name="id">要查詢的用戶id</param>
         /// <returns></returns>
         [Route("GetCustomDetail/{id}")]
-        public HttpResponseMessage GetCustomDetail(int id) 
+        public HttpResponseMessage GetCustomDetail(int id)
         {
             var target = context.Custom.Where(c => c.id == id).ToList();
             if (target.Count > 0)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, target.First());
             }
-            else 
+            else
             {
                 var message = string.Format("查無此會員!");
                 HttpError err = new HttpError(message);
@@ -44,15 +50,15 @@ namespace insurranceDemo.Controllers
             }
         }
 
-        [HttpPost ]
+        [HttpPost]
         [Route("AddCustom")]
         /// <summary>
         /// 新增用戶
         /// </summary>
         /// <param name="newCustom">新用戶的資料</param>
         /// <returns></returns>
-        public HttpResponseMessage AddCustom(string name, bool sex, string identity, string address = "") 
-        {          
+        public HttpResponseMessage AddCustom(string name, bool sex, string identity, string address = "")
+        {
             var target = context.Custom.Where(c => c.identity == identity).ToList();
             if (target.Count == 0)
             {
@@ -62,6 +68,7 @@ namespace insurranceDemo.Controllers
                 newCustomer.isDelete = false;
                 newCustomer.insuranceList = "";
                 newCustomer.identity = identity;
+                newCustomer.createTime = DateTime.Now;
                 context.Custom.Add(newCustomer);
                 try
                 {
@@ -76,7 +83,7 @@ namespace insurranceDemo.Controllers
                     return Request.CreateResponse(HttpStatusCode.NotFound, err);
                 }
             }
-            else 
+            else
             {
                 var message = string.Format("新增會員失敗，身分證字號錯誤!");
                 HttpError err = new HttpError(message);
@@ -90,7 +97,7 @@ namespace insurranceDemo.Controllers
         /// </summary>
         /// <param name="id">要刪除會員的Id</param>
         /// <returns>刪除操作的回應</returns>
-        [HttpPost ]
+        [HttpPost]
         [Route("deleteCustomer")]
         public HttpResponseMessage deleteCustomer(int id)
         {
@@ -101,14 +108,14 @@ namespace insurranceDemo.Controllers
                 customer.isDelete = true;
 
                 try
-                {                    
+                {
                     context.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, new CommonSuccessReponse());
                 }
                 catch (Exception e)
                 {
                     return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
-            
+
                 }
             }
             else
@@ -118,6 +125,35 @@ namespace insurranceDemo.Controllers
             }
 
         }
+
+        [HttpPost]
+        [Route("updateCustomDetail")]
+        public HttpResponseMessage updateCustomDetail(int id, string name, bool sex, string address )                                                          
+        {
+            var custom = getCustomBy(id);
+            if (custom  != null)
+            {
+                custom.name = name;
+                custom.sex = sex;
+                custom.addresss = address;
+                try
+                {
+                    context.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, new CommonSuccessReponse());
+
+                }
+                catch (Exception e)
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "請求的會員不存在!");
+            }
+        }
+
+
 
         // POST api/values
         public void Post([FromBody]string value)
