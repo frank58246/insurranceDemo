@@ -13,7 +13,6 @@ namespace insurranceDemo.Controllers
     /// </summary>
     public class CustomController : ApiController
     {
-
         private Custom getCustomBy(int id)
         {
             var target = context.Custom.Where(c => c.id == id).ToList();
@@ -25,12 +24,7 @@ namespace insurranceDemo.Controllers
         /// </summary>
         private InsuranceCompanyEntities context = new InsuranceCompanyEntities();
 
-        // GET api/values
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
+     
 
         /// <summary>
         /// 取得指定id用戶的詳細資料
@@ -40,10 +34,12 @@ namespace insurranceDemo.Controllers
         [Route("GetCustomDetail/{id}")]
         public HttpResponseMessage GetCustomDetail(int id)
         {
-            var target = context.Custom.Where(c => c.id == id).ToList();
-            if (target.Count > 0)
+            var custom = getCustomBy(id);
+            if (custom != null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, target.First());
+                var clientCustom = new ClientCustom(custom);
+                clientCustom.InsurranceList = InsurranceController.getCustomInsurrance(custom.insuranceList);
+                return Request.CreateResponse(HttpStatusCode.OK, clientCustom);
             }
             else
             {
@@ -53,13 +49,17 @@ namespace insurranceDemo.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("AddCustom")]
+        
         /// <summary>
-        /// 新增用戶
+        /// 新增客戶
         /// </summary>
-        /// <param name="newCustom">新用戶的資料</param>
-        /// <returns></returns>
+        /// <param name="name">姓名</param>
+        /// <param name="sex">性別</param>
+        /// <param name="identity">身分證字號</param>
+        /// <param name="address">地址</param>
+        /// <returns>新客戶的ID</returns>
+        [HttpPost]
+        [Route("AddCustom")]        
         public HttpResponseMessage AddCustom(string name, bool sex, string identity, string address = "")
         {
             var target = context.Custom.Where(c => c.identity == identity).ToList();
@@ -80,10 +80,8 @@ namespace insurranceDemo.Controllers
 
                 }
                 catch (Exception e)
-                {
-                    var message = string.Format("新增會員失敗");
-                    HttpError err = new HttpError(message);
-                    return Request.CreateResponse(HttpStatusCode.NotFound, err);
+                {                   
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
                 }
             }
             else

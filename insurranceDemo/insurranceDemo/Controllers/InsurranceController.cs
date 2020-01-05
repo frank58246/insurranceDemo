@@ -148,7 +148,7 @@ namespace insurranceDemo.Controllers
         /// <summary>
         /// 刪除保單
         /// </summary>
-        /// <param name="id">要刪除的保單資料</param>
+        /// <param name="id">要刪除的保單的id</param>
         /// <returns>刪除的結果</returns>
         [HttpPost]
         [Route("DeleteInsurrance")]
@@ -175,6 +175,45 @@ namespace insurranceDemo.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "要刪除的保單不存在!");
 
             }
+        }
+
+        /// <summary>
+        /// 取得使用者的保險清單
+        /// </summary>
+        /// <param name="serverData">資料庫的字串</param>
+        /// <returns>使用者的保險清單</returns>
+        public static List<ClientInsurrance> getCustomInsurrance(string serverData)
+        {
+            InsuranceCompanyEntities context = new InsuranceCompanyEntities();
+            List<Insurrance> allAvalibleInsurrance = context.Insurrance.Where(i => !i.isDelete).ToList();
+            Dictionary<long, Insurrance> dictInsurrance = new Dictionary<long, Insurrance>();
+            foreach (var item in allAvalibleInsurrance)
+            {
+                dictInsurrance.Add(item.id, item);
+            }
+
+
+            var result = new List<ClientInsurrance>();
+            string[] list = serverData.Split(',');
+            foreach (var item in list)
+            {
+                try
+                {
+                    long intValue = long.Parse(item);
+                    var insurrance = dictInsurrance[intValue];
+                    if (insurrance != null)
+                    {
+                        result.Add(new ClientInsurrance(insurrance)) ;
+                    }
+
+                }
+                catch (Exception)
+                {
+                    return result;
+                }
+            }
+
+            return result;
         }
     }
 

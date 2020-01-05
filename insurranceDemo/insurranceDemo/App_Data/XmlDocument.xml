@@ -498,6 +498,16 @@
             <param name="id">要查詢的用戶id</param>
             <returns></returns>
         </member>
+        <member name="M:insurranceDemo.Controllers.CustomController.AddCustom(System.String,System.Boolean,System.String,System.String)">
+            <summary>
+            新增客戶
+            </summary>
+            <param name="name">姓名</param>
+            <param name="sex">性別</param>
+            <param name="identity">身分證字號</param>
+            <param name="address">地址</param>
+            <returns>新客戶的ID</returns>
+        </member>
         <member name="M:insurranceDemo.Controllers.CustomController.deleteCustomer(System.Int32)">
             <summary>
             刪除會員
@@ -568,8 +578,15 @@
             <summary>
             刪除保單
             </summary>
-            <param name="id">要刪除的保單資料</param>
+            <param name="id">要刪除的保單的id</param>
             <returns>刪除的結果</returns>
+        </member>
+        <member name="M:insurranceDemo.Controllers.InsurranceController.getCustomInsurrance(System.String)">
+            <summary>
+            取得使用者的保險清單
+            </summary>
+            <param name="serverData">資料庫的字串</param>
+            <returns>使用者的保險清單</returns>
         </member>
         <member name="T:insurranceDemo.Models.ClientCustom">
             <summary>
