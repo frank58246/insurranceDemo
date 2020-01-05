@@ -19,6 +19,7 @@ namespace insurranceDemo.Controllers.DataHelper
             {
                 return null;
             }
+            
 
             var newCustomer = new Custom();
             newCustomer.name = name;
