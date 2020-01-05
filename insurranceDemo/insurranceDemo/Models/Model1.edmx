@@ -11,7 +11,7 @@
           </Key>
           <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="sex" Type="bit" Nullable="false" />
+          <Property Name="isMale" Type="bit" Nullable="false" />
           <Property Name="addresss" Type="nvarchar" MaxLength="250" />
           <Property Name="createTime" Type="datetime" Nullable="false" />
           <Property Name="insuranceList" Type="nvarchar" MaxLength="250" Nullable="false" />
@@ -43,12 +43,12 @@
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="sex" Type="Boolean" Nullable="false" />
           <Property Name="addresss" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="createTime" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="insuranceList" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="isDelete" Type="Boolean" Nullable="false" />
           <Property Name="identity" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isMale" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Insurrance">
           <Key>
@@ -74,10 +74,10 @@
           <EntitySetMapping Name="Custom">
             <EntityTypeMapping TypeName="InsuranceCompanyModel.Custom">
               <MappingFragment StoreEntitySet="Custom">
+                <ScalarProperty Name="isMale" ColumnName="isMale" />
                 <ScalarProperty Name="identity" ColumnName="identity" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="sex" ColumnName="sex" />
                 <ScalarProperty Name="addresss" ColumnName="addresss" />
                 <ScalarProperty Name="createTime" ColumnName="createTime" />
                 <ScalarProperty Name="insuranceList" ColumnName="insuranceList" />

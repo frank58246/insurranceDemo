@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace InsurranceDemo.Models
+namespace insurranceDemo.Models
 {
     using System;
     using System.Collections.Generic;

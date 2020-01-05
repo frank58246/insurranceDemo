@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using insurranceDemo.Controllers.DataHelper;
+using insurranceDemo.Models;
 using InsurranceDemo.Models;
 
 namespace InsurranceDemo.Controllers
@@ -12,7 +13,7 @@ namespace InsurranceDemo.Controllers
     /// <summary>
     /// 控制客戶資料的controller
     /// </summary>
-    internal class CustomController : ApiController
+    public class CustomController : ApiController
     {
         /// <summary>
         /// 找出指定id的用戶
@@ -139,18 +140,18 @@ namespace InsurranceDemo.Controllers
         /// </summary>
         /// <param name="id">客戶的id</param>
         /// <param name="name">姓名</param>
-        /// <param name="sex">性別</param>
+        /// <param name="isMale">性別</param>
         /// <param name="address">住址</param>
         /// <returns></returns>
         [HttpPost]
         [Route("updateCustomDetail")]
-        public HttpResponseMessage updateCustomDetail(int id, string name, bool sex, string address )                                                          
+        public HttpResponseMessage updateCustomDetail(int id, string name, bool isMale, string address )                                                          
         {
             var custom = getCustomBy(id);
             if (custom  != null)
             {
                 custom.name = name;
-                custom.sex = sex;
+                custom.isMale = isMale;
                 custom.addresss = address;
                 try
                 {

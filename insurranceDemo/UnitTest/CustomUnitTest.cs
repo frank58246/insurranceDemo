@@ -1,4 +1,5 @@
 using insurranceDemo.Controllers.DataHelper;
+using insurranceDemo.Models;
 using InsurranceDemo.Controllers;
 using InsurranceDemo.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -47,7 +48,7 @@ namespace UnitTest
         }
 
         /// <summary>
-        /// 檢查身分證字號首字有沒有大小寫
+        /// 檢查身分證字號和性別有沒有對起來
         /// </summary>
         [TestMethod]
         public void Test_GetValidCustom_With_WrongmSex_Male()

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace InsurranceDemo.Models
+namespace insurranceDemo.Models
 {
     using System;
     using System.Collections.Generic;
@@ -16,11 +16,11 @@ namespace InsurranceDemo.Models
     {
         public long id { get; set; }
         public string name { get; set; }
-        public bool sex { get; set; }
         public string addresss { get; set; }
         public System.DateTime createTime { get; set; }
         public string insuranceList { get; set; }
         public bool isDelete { get; set; }
         public string identity { get; set; }
+        public bool isMale { get; set; }
     }
 }

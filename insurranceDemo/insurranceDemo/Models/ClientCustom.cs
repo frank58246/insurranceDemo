@@ -1,4 +1,5 @@
-﻿using System;
+﻿using insurranceDemo.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -37,7 +38,7 @@ namespace InsurranceDemo.Models
         public ClientCustom(Custom serverData)
         {
             Name = serverData.name;
-            IsMale = serverData.sex;
+            IsMale = serverData.isMale;
             Address = serverData.addresss;            
         
         }

@@ -1,4 +1,5 @@
-﻿using InsurranceDemo.Models;
+﻿using insurranceDemo.Models;
+using InsurranceDemo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +13,19 @@ namespace insurranceDemo.Controllers.DataHelper
     /// </summary>
     public class CustomDataHelper
     {
-        public static Custom getValidCustom(string name, bool sex, string identity, string address = "")
+        public static Custom getValidCustom(string name, bool isMale, string identity, string address = "")
         {
                         
-            if (!Regex.IsMatch(identity, @"^[A-Z]\d{9}$"))
+            if (!Regex.IsMatch(identity, @"^[A-Z][1-2]{1}\d{8}$"))
             {
                 return null;
             }
-            
+
+           
 
             var newCustomer = new Custom();
             newCustomer.name = name;
-            newCustomer.sex = sex;
+            newCustomer.isMale = isMale;
             newCustomer.isDelete = false;
             newCustomer.insuranceList = "";
             newCustomer.identity = identity;

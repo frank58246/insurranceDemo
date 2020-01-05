@@ -528,7 +528,7 @@
             </summary>
             <param name="id">客戶的id</param>
             <param name="name">姓名</param>
-            <param name="sex">性別</param>
+            <param name="isMale">性別</param>
             <param name="address">住址</param>
             <returns></returns>
         </member>
@@ -620,7 +620,7 @@
             保單的清單
             </summary>
         </member>
-        <member name="M:InsurranceDemo.Models.ClientCustom.#ctor(InsurranceDemo.Models.Custom)">
+        <member name="M:InsurranceDemo.Models.ClientCustom.#ctor(insurranceDemo.Models.Custom)">
             <summary>
             使用資料庫的物件初始化
             </summary>
@@ -651,7 +651,7 @@
             保單描述
             </summary>
         </member>
-        <member name="M:InsurranceDemo.Models.ClientInsurrance.#ctor(InsurranceDemo.Models.Insurrance)">
+        <member name="M:InsurranceDemo.Models.ClientInsurrance.#ctor(insurranceDemo.Models.Insurrance)">
             <summary>
             
             </summary>
