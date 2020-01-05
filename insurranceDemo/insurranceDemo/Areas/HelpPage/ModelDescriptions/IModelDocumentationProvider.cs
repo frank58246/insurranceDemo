@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace insurranceDemo.Areas.HelpPage.ModelDescriptions
+namespace InsurranceDemo.Areas.HelpPage.ModelDescriptions
 {
     public interface IModelDocumentationProvider
     {

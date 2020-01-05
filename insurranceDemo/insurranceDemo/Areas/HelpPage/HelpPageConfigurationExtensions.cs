@@ -11,10 +11,10 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using insurranceDemo.Areas.HelpPage.ModelDescriptions;
-using insurranceDemo.Areas.HelpPage.Models;
+using InsurranceDemo.Areas.HelpPage.ModelDescriptions;
+using InsurranceDemo.Areas.HelpPage.Models;
 
-namespace insurranceDemo.Areas.HelpPage
+namespace InsurranceDemo.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {

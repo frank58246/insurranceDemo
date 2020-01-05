@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace insurranceDemo.Models
+namespace InsurranceDemo.Models
 {
     /// <summary>
     /// 丟給client端的保單物件

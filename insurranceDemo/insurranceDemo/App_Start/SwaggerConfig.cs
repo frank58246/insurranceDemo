@@ -6,13 +6,13 @@ using System.Web.Http.Description;
 using System.Web.Http.Routing.Constraints;
 using System.Collections.Generic;
 
-using insurranceDemo;
+using InsurranceDemo;
 using Swagger.Net.Application;
 using Swagger.Net;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
-namespace insurranceDemo
+namespace InsurranceDemo
 {
     public class SwaggerConfig
     {

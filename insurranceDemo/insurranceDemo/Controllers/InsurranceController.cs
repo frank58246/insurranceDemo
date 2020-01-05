@@ -1,4 +1,4 @@
-﻿using insurranceDemo.Models;
+﻿using InsurranceDemo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace insurranceDemo.Controllers
+namespace InsurranceDemo.Controllers
 {
     /// <summary>
     /// 保單相關處理
@@ -41,7 +41,7 @@ namespace insurranceDemo.Controllers
         /// 新增保單
         /// </summary>
         /// <param name="name">保單名稱</param>
-        /// <param name="description">保單名稱</param>
+        /// <param name="description">保單描述</param>
         /// <param name="price">價格</param>
         /// <returns>新的保單的id</returns>
         /// 

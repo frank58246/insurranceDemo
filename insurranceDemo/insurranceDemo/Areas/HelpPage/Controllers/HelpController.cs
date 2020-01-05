@@ -1,10 +1,10 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using insurranceDemo.Areas.HelpPage.ModelDescriptions;
-using insurranceDemo.Areas.HelpPage.Models;
+using InsurranceDemo.Areas.HelpPage.ModelDescriptions;
+using InsurranceDemo.Areas.HelpPage.Models;
 
-namespace insurranceDemo.Areas.HelpPage.Controllers
+namespace InsurranceDemo.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

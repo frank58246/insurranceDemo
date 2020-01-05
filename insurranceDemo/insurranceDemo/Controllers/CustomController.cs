@@ -4,15 +4,21 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using insurranceDemo.Models;
+using insurranceDemo.Controllers.DataHelper;
+using InsurranceDemo.Models;
 
-namespace insurranceDemo.Controllers
+namespace InsurranceDemo.Controllers
 {
     /// <summary>
     /// 控制客戶資料的controller
     /// </summary>
-    public class CustomController : ApiController
+    internal class CustomController : ApiController
     {
+        /// <summary>
+        /// 找出指定id的用戶
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private Custom getCustomBy(int id)
         {
             var target = context.Custom.Where(c => c.id == id).ToList();
@@ -24,7 +30,7 @@ namespace insurranceDemo.Controllers
         /// </summary>
         private InsuranceCompanyEntities context = new InsuranceCompanyEntities();
 
-     
+      
 
         /// <summary>
         /// 取得指定id用戶的詳細資料
@@ -65,23 +71,24 @@ namespace insurranceDemo.Controllers
             var target = context.Custom.Where(c => c.identity == identity).ToList();
             if (target.Count == 0)
             {
-                var newCustomer = new Custom();
-                newCustomer.name = name;
-                newCustomer.sex = sex;
-                newCustomer.isDelete = false;
-                newCustomer.insuranceList = "";
-                newCustomer.identity = identity;
-                newCustomer.createTime = DateTime.Now;
-                context.Custom.Add(newCustomer);
-                try
+                var newCustomer = CustomDataHelper.getValidCustom(name, sex, identity, address);
+                if (newCustomer != null)
                 {
-                    context.SaveChanges();
-                    return Request.CreateResponse(HttpStatusCode.OK, newCustomer.id);
+                     context.Custom.Add(newCustomer);
+                    try
+                    {
+                        context.SaveChanges();
+                        return Request.CreateResponse(HttpStatusCode.OK, newCustomer.id);
 
+                    }
+                    catch (Exception e)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+                    }
                 }
-                catch (Exception e)
-                {                   
-                    return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+                else 
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "會員資料有誤!");
                 }
             }
             else
@@ -162,17 +169,16 @@ namespace insurranceDemo.Controllers
             }
         }
 
-        /// <summary>
-        /// 更新客戶的保單資料
-        /// </summary>
-        /// <param name="id">客戶的id</param>
-        /// <param name="insurranceList">保單id清單</param>
-        /// <returns></returns>
+      /// <summary>
+      /// 更新客戶的保險清單
+      /// </summary>
+      /// <param name="id">客戶的ID</param>
+      /// <param name="insurranceList">客戶擁有的保險清單列表</param>
+      /// <returns>是否成功</returns>
         [HttpPost]
-        [Route("updateCustomInsurrance")]
-        public HttpResponseMessage updateCustomInsurrance(int id, int[] insurranceList)
+        [Route("UpdateCustomInsurrance")]
+        public HttpResponseMessage UpdateCustomInsurrance(int id, int[] insurranceList)
         {
-            var custom = getCustomBy(id);
 
             // 檢查是否給不存在的保單id
             var allInsuranceId = context.Insurrance.Where(i => ! i.isDelete).Select(i => i.id);
@@ -184,7 +190,8 @@ namespace insurranceDemo.Controllers
                 }
             }
 
-
+            // 檢查用戶是否存在
+            var custom = getCustomBy(id);
             if (custom != null)
             {
                 string joinedList = String.Join(", ", insurranceList.ToArray());

@@ -1,6 +1,6 @@
 using System;
 
-namespace insurranceDemo.Areas.HelpPage.ModelDescriptions
+namespace InsurranceDemo.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Describes a type model.
