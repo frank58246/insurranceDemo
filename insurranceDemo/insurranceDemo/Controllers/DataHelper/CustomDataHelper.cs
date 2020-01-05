@@ -21,7 +21,16 @@ namespace insurranceDemo.Controllers.DataHelper
                 return null;
             }
 
-           
+            if (identity[1] == '1' && !isMale)
+            {
+                return null;
+            }
+
+            if (identity[1] == '2' && isMale)
+            {
+                return null;
+            }
+
 
             var newCustomer = new Custom();
             newCustomer.name = name;

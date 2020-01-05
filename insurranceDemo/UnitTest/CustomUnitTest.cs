@@ -68,6 +68,27 @@ namespace UnitTest
             Assert.AreEqual(custom, null);
         }
 
+        /// <summary>
+        /// 檢查身分證字號和性別有沒有對起來
+        /// </summary>
+        [TestMethod]
+        public void Test_GetValidCustom_With_WrongmSex_Female()
+        {
+            // 測試男生的身分證字號開頭必為1
+
+            /// Arrange
+            string identity = "A123456789";
+            string name = "test1";
+            bool isMale = false;
+
+            /// Act
+            Custom custom = CustomDataHelper.getValidCustom(name, isMale, identity);
+
+
+            /// Assert
+            Assert.AreEqual(custom, null);
+        }
+
         [TestMethod]
 
         public void Test_GetValidCustom_With_ValidIdentity()
