@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace insurranceDemo.Controllers.DataHelper
@@ -19,7 +20,10 @@ namespace insurranceDemo.Controllers.DataHelper
                 return null;
             }
 
-
+            if (!Regex.IsMatch(identity, @"^[a-z][0-9]{9}$"))
+            {
+                return null;
+            }
 
             var newCustomer = new Custom();
             newCustomer.name = name;
