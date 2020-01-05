@@ -13,6 +13,11 @@ namespace insurranceDemo.Controllers.DataHelper
     {
         public static Custom getValidCustom(string name, bool sex, string identity, string address = "")
         {
+
+            if (identity.Count() != 10)
+            {
+                return null;
+            }
             var newCustomer = new Custom();
             newCustomer.name = name;
             newCustomer.sex = sex;
@@ -20,6 +25,8 @@ namespace insurranceDemo.Controllers.DataHelper
             newCustomer.insuranceList = "";
             newCustomer.identity = identity;
             newCustomer.createTime = DateTime.Now;
+            
+            
             return newCustomer;
         }
         
