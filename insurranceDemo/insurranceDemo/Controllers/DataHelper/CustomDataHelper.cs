@@ -14,13 +14,8 @@ namespace insurranceDemo.Controllers.DataHelper
     {
         public static Custom getValidCustom(string name, bool sex, string identity, string address = "")
         {
-
-            if (identity.Count() != 10)
-            {
-                return null;
-            }
-
-            if (!Regex.IsMatch(identity, @"^[a-z][0-9]{9}$"))
+                        
+            if (!Regex.IsMatch(identity, @"^[A-Z]\d{9}$"))
             {
                 return null;
             }

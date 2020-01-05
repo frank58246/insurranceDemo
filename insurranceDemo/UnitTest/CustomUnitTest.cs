@@ -46,5 +46,22 @@ namespace UnitTest
             Assert.AreEqual(custom, null);
         }
 
+
+        [TestMethod]
+
+        public void Test_GetValidCustom_With_ValidIdentity()
+        {
+            /// Arrange
+            string identity = "A123456789";
+            string name = "test1";
+            bool sex = true;
+
+            /// Act
+            Custom custom = CustomDataHelper.getValidCustom(name, sex, identity);
+
+            /// Assert
+            Assert.IsTrue(custom != null);
+
+        }
     }
 }
