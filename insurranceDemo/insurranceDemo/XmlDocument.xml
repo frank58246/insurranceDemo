@@ -498,6 +498,11 @@
             資料庫實體
             </summary>
         </member>
+        <member name="F:InsurranceDemo.Controllers.CustomController.commonSuccessResponse">
+            <summary>
+             共用的成功回應物件
+            </summary>
+        </member>
         <member name="M:InsurranceDemo.Controllers.CustomController.GetCustomDetail(System.Int32)">
             <summary>
             取得指定id用戶的詳細資料
@@ -513,7 +518,7 @@
             <param name="sex">性別</param>
             <param name="identity">身分證字號</param>
             <param name="address">地址</param>
-            <returns>新客戶的ID</returns>
+            <returns>新客戶的實體</returns>
         </member>
         <member name="M:InsurranceDemo.Controllers.CustomController.DeleteCustomer(System.Int32)">
             <summary>
@@ -591,7 +596,7 @@
             <param name="name">保單名稱</param>
             <param name="description">保單描述</param>
             <param name="price">保單價格</param>
-            <returns></returns>        
+            <returns>是否成功的回應</returns>        
         </member>
         <member name="M:InsurranceDemo.Controllers.InsurranceController.DeleteInsurrance(System.Int64)">
             <summary>
@@ -707,6 +712,28 @@
             </summary>
             <param name="serverData">資料庫的字串</param>
             <returns>使用者的保險清單</returns>
+        </member>
+        <member name="T:insurranceDemo.Models.CommonErrorResponse">
+            <summary>
+            共用的api錯誤回應
+            </summary>
+        </member>
+        <member name="F:insurranceDemo.Models.CommonErrorResponse.Code">
+            <summary>
+            錯誤代碼
+            </summary>
+        </member>
+        <member name="F:insurranceDemo.Models.CommonErrorResponse.Description">
+            <summary>
+            錯誤描述
+            </summary>
+        </member>
+        <member name="M:insurranceDemo.Models.CommonErrorResponse.#ctor(System.Int32,System.String)">
+            <summary>
+            建構子
+            </summary>
+            <param name="code"></param>
+            <param name="description"></param>
         </member>
     </members>
 </doc>

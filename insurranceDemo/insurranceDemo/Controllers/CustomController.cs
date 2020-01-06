@@ -48,7 +48,7 @@ namespace InsurranceDemo.Controllers
         [HttpGet]
         [Route("GetCustomDetail/{id}")]
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(ClientCustom))]
-        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(CommonErrorResponse))]
         public HttpResponseMessage GetCustomDetail(int id)
         {
             var custom = getCustomBy(id);
@@ -59,8 +59,9 @@ namespace InsurranceDemo.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, clientCustom);
             }
             else
-            {               
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "查無此會員!");
+            {
+                var errorResponse = new CommonErrorResponse(101, "查無此會員!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
             }
         }
 
@@ -76,7 +77,7 @@ namespace InsurranceDemo.Controllers
         [HttpPost]
         [Route("AddCustom")]
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(ClientCustom))]
-        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(CommonErrorResponse))]
         public HttpResponseMessage AddCustom(string name, bool sex, string identity, string address = "")
         {
             var target = context.Custom.Where(c => c.identity == identity).ToList();
@@ -95,17 +96,20 @@ namespace InsurranceDemo.Controllers
                     }
                     catch (Exception e)
                     {
-                        return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+                        var errorResponse = new CommonErrorResponse(201, e.Message);
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
                     }
                 }
                 else 
                 {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, "會員資料有誤!");
+                    var errorResponse = new CommonErrorResponse(101, "會員資料有誤!");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
                 }
             }
             else
-            {                
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "新增會員失敗，身分證字號錯誤!");
+            {
+                var errorResponse = new CommonErrorResponse(102, "身分證字號已存在!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
             }
 
         }
@@ -118,7 +122,7 @@ namespace InsurranceDemo.Controllers
         [HttpPost]
         [Route("DeleteCustomer")]
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(CommonSuccessReponse))]
-        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(CommonErrorResponse))]
         public HttpResponseMessage DeleteCustomer(int id)
         {
             var target = context.Custom.Where(c => c.id == id && !c.isDelete).ToList();
@@ -134,14 +138,15 @@ namespace InsurranceDemo.Controllers
                 }
                 catch (Exception e)
                 {
-                    return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+                    var errorResponse = new CommonErrorResponse(201, e.Message);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
 
                 }
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "請求的會員不存在!");
-
+                var errorResponse = new CommonErrorResponse(101, "請求的會員不存在!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
             }
 
         }
@@ -157,7 +162,7 @@ namespace InsurranceDemo.Controllers
         [HttpPost]
         [Route("UpdateCustomDetail")]
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(CommonSuccessReponse))]
-        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(CommonErrorResponse))]
         public HttpResponseMessage UpdateCustomDetail(int id, string name, bool isMale, string address )                                                          
         {
             var custom = getCustomBy(id);
@@ -174,12 +179,14 @@ namespace InsurranceDemo.Controllers
                 }
                 catch (Exception e)
                 {
-                    return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+                    var errorResponse = new CommonErrorResponse(201, e.Message);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
                 }
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "請求的會員不存在!");
+                var errorResponse = new CommonErrorResponse(101, "請求的會員不存在!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
             }
         }
 
@@ -202,7 +209,8 @@ namespace InsurranceDemo.Controllers
             {
                 if (!allInsuranceId.Contains(oneInsurrance)) 
                 {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, $"請求的保單{oneInsurrance}不在資料庫中!");
+                    var errorResponse = new CommonErrorResponse(101, $"請求的保單{oneInsurrance}不在資料庫中!");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
                 }
             }
 
@@ -220,15 +228,16 @@ namespace InsurranceDemo.Controllers
                 }
                 catch (Exception e)
                 {
-                    return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+                    var errorResponse = new CommonErrorResponse(201, e.Message);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
 
                 }
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "請求的會員不存在!");
-            }
-        
+                var errorResponse = new CommonErrorResponse(102, "請求的會員不存在!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
+            }        
         }
 
     }

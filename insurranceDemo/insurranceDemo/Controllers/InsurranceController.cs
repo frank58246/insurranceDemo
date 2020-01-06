@@ -16,7 +16,6 @@ namespace InsurranceDemo.Controllers
     /// </summary>
     public class InsurranceController : ApiController
     {
-
         /// <summary>
         /// 資料庫實體
         /// </summary>
@@ -28,7 +27,8 @@ namespace InsurranceDemo.Controllers
         private List<Insurrance> allInsurranceCache 
         {
             get
-            { return context.Insurrance.Where(i => !i.isDelete).ToList();
+            { 
+                return context.Insurrance.Where(i => !i.isDelete).ToList();
             }
         }
 
