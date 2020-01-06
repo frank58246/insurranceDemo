@@ -4,9 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using insurranceDemo.Controllers.DataHelper;
 using insurranceDemo.Models;
 using InsurranceDemo.Models;
+using Swagger.Net.Annotations;
 
 namespace InsurranceDemo.Controllers
 {
@@ -31,28 +33,34 @@ namespace InsurranceDemo.Controllers
         /// </summary>
         private InsuranceCompanyEntities context = new InsuranceCompanyEntities();
 
+
+        /// <summary>
+        ///  共用的成功回應物件
+        /// </summary>
+        private CommonSuccessReponse commonSuccessResponse = new CommonSuccessReponse();
       
 
         /// <summary>
         /// 取得指定id用戶的詳細資料
         /// </summary>
         /// <param name="id">要查詢的用戶id</param>
-        /// <returns></returns>
+        /// <returns>指定的用戶</returns>
+        [HttpGet]
         [Route("GetCustomDetail/{id}")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(ClientCustom))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
         public HttpResponseMessage GetCustomDetail(int id)
         {
             var custom = getCustomBy(id);
             if (custom != null)
             {
                 var clientCustom = new ClientCustom(custom);
-                clientCustom.InsurranceList = InsurranceController.getCustomInsurrance(custom.insuranceList);
+                clientCustom.InsurranceList = InsurranceDataHelper.GetCustomInsurrance(custom.insuranceList);
                 return Request.CreateResponse(HttpStatusCode.OK, clientCustom);
             }
             else
-            {
-                var message = string.Format("查無此會員!");
-                HttpError err = new HttpError(message);
-                return Request.CreateResponse(HttpStatusCode.NotFound, err);
+            {               
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "查無此會員!");
             }
         }
 
@@ -64,9 +72,11 @@ namespace InsurranceDemo.Controllers
         /// <param name="sex">性別</param>
         /// <param name="identity">身分證字號</param>
         /// <param name="address">地址</param>
-        /// <returns>新客戶的ID</returns>
+        /// <returns>新客戶的實體</returns>
         [HttpPost]
-        [Route("AddCustom")]        
+        [Route("AddCustom")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(ClientCustom))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
         public HttpResponseMessage AddCustom(string name, bool sex, string identity, string address = "")
         {
             var target = context.Custom.Where(c => c.identity == identity).ToList();
@@ -79,7 +89,8 @@ namespace InsurranceDemo.Controllers
                     try
                     {
                         context.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK, newCustomer.id);
+                        var clientCustom = new ClientCustom(newCustomer);
+                        return Request.CreateResponse(HttpStatusCode.OK, clientCustom);
 
                     }
                     catch (Exception e)
@@ -93,10 +104,8 @@ namespace InsurranceDemo.Controllers
                 }
             }
             else
-            {
-                var message = string.Format("新增會員失敗，身分證字號錯誤!");
-                HttpError err = new HttpError(message);
-                return Request.CreateResponse(HttpStatusCode.NotFound, err);
+            {                
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "新增會員失敗，身分證字號錯誤!");
             }
 
         }
@@ -107,8 +116,10 @@ namespace InsurranceDemo.Controllers
         /// <param name="id">要刪除會員的Id</param>
         /// <returns>刪除操作的回應</returns>
         [HttpPost]
-        [Route("deleteCustomer")]
-        public HttpResponseMessage deleteCustomer(int id)
+        [Route("DeleteCustomer")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(CommonSuccessReponse))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
+        public HttpResponseMessage DeleteCustomer(int id)
         {
             var target = context.Custom.Where(c => c.id == id && !c.isDelete).ToList();
             if (target.Count > 0)
@@ -119,7 +130,7 @@ namespace InsurranceDemo.Controllers
                 try
                 {
                     context.SaveChanges();
-                    return Request.CreateResponse(HttpStatusCode.OK, new CommonSuccessReponse());
+                    return Request.CreateResponse(HttpStatusCode.OK, commonSuccessResponse);
                 }
                 catch (Exception e)
                 {
@@ -144,8 +155,10 @@ namespace InsurranceDemo.Controllers
         /// <param name="address">住址</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("updateCustomDetail")]
-        public HttpResponseMessage updateCustomDetail(int id, string name, bool isMale, string address )                                                          
+        [Route("UpdateCustomDetail")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(CommonSuccessReponse))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
+        public HttpResponseMessage UpdateCustomDetail(int id, string name, bool isMale, string address )                                                          
         {
             var custom = getCustomBy(id);
             if (custom  != null)
@@ -156,7 +169,7 @@ namespace InsurranceDemo.Controllers
                 try
                 {
                     context.SaveChanges();
-                    return Request.CreateResponse(HttpStatusCode.OK, new CommonSuccessReponse());
+                    return Request.CreateResponse(HttpStatusCode.OK, commonSuccessResponse);
 
                 }
                 catch (Exception e)
@@ -178,6 +191,8 @@ namespace InsurranceDemo.Controllers
       /// <returns>是否成功</returns>
         [HttpPost]
         [Route("UpdateCustomInsurrance")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(CommonSuccessReponse))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
         public HttpResponseMessage UpdateCustomInsurrance(int id, int[] insurranceList)
         {
 
@@ -200,7 +215,7 @@ namespace InsurranceDemo.Controllers
                 try
                 {
                     context.SaveChanges();
-                    return Request.CreateResponse(HttpStatusCode.OK, new CommonSuccessReponse());
+                    return Request.CreateResponse(HttpStatusCode.OK, commonSuccessResponse);
 
                 }
                 catch (Exception e)

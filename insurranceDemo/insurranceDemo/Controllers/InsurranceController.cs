@@ -1,6 +1,7 @@
 ﻿using insurranceDemo.Controllers.DataHelper;
 using insurranceDemo.Models;
 using InsurranceDemo.Models;
+using Swagger.Net.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +58,8 @@ namespace InsurranceDemo.Controllers
         /// 
         [HttpPost]
         [Route("AddInsurrance")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(ClientInsurrance))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
         public HttpResponseMessage AddInsurrance(string name, string description, decimal price) 
         {
             // 檢查有沒有重名
@@ -75,8 +78,8 @@ namespace InsurranceDemo.Controllers
             try
             {
                 context.SaveChanges();
-                var id = new { insurranceId = insurrance.id };
-                return Request.CreateResponse(HttpStatusCode.OK, id);
+                var clientInsurrance = new ClientInsurrance(insurrance);
+                return Request.CreateResponse(HttpStatusCode.OK, clientInsurrance);
             }
             catch (Exception e)
             {
@@ -90,7 +93,8 @@ namespace InsurranceDemo.Controllers
         /// </summary>
         /// <returns>所有保單種類的清單</returns>
         [HttpGet]
-        [Route("GetAllInsurrance")]        
+        [Route("GetAllInsurrance")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(IEnumerable<ClientInsurrance>))]
         public HttpResponseMessage GetAllInsurrance()
         {
             var result = new List<ClientInsurrance>();
@@ -110,9 +114,11 @@ namespace InsurranceDemo.Controllers
         /// <param name="name">保單名稱</param>
         /// <param name="description">保單描述</param>
         /// <param name="price">保單價格</param>
-        /// <returns></returns>        
+        /// <returns>是否成功的回應</returns>        
         [HttpPost]
         [Route("UpdateInsurrance")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(CommonSuccessReponse))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
         public HttpResponseMessage UpdateInsurrance(long id, string name, string description,decimal price)
         {          
 
@@ -158,6 +164,8 @@ namespace InsurranceDemo.Controllers
         /// <returns>刪除的結果</returns>
         [HttpPost]
         [Route("DeleteInsurrance")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(CommonSuccessReponse))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
         public HttpResponseMessage DeleteInsurrance(long id)
         {
             var insurrance = getInsurranceBy(id);
@@ -182,7 +190,6 @@ namespace InsurranceDemo.Controllers
 
             }
         }
-
        
     }
 

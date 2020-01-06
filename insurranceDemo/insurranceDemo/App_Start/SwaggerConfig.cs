@@ -112,7 +112,7 @@ namespace InsurranceDemo
                         // You can add individual files by providing the path to one or
                         // more Xml comment files.
                         //
-                        c.IncludeXmlComments(AppDomain.CurrentDomain.BaseDirectory + "/App_Data/XmlDocument.xml");
+                        c.IncludeXmlComments(AppDomain.CurrentDomain.BaseDirectory + "/bin/XmlDocument.xml");
                        // c.IncludeAllXmlComments(thisAssembly, AppDomain.CurrentDomain.BaseDirectory );
 
                         // Swagger-Net makes a best attempt at generating Swagger compliant JSON schemas for the various types
