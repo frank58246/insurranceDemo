@@ -1,4 +1,5 @@
-﻿using insurranceDemo.Models;
+﻿using insurranceDemo.Controllers.DataHelper;
+using insurranceDemo.Models;
 using InsurranceDemo.Models;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,9 @@ namespace InsurranceDemo.Controllers
         /// </summary>
         private InsuranceCompanyEntities context = new InsuranceCompanyEntities();
 
+        /// <summary>
+        /// 所有保單的快取
+        /// </summary>
         private List<Insurrance> allInsurranceCache 
         {
             get
@@ -27,6 +31,11 @@ namespace InsurranceDemo.Controllers
             }
         }
 
+        /// <summary>
+        /// 取得指定id的保單
+        /// </summary>
+        /// <param name="id">保單的id</param>
+        /// <returns>指定的保單</returns>
         private Insurrance getInsurranceBy(long id) 
         {
             var list = allInsurranceCache.Where(i => i.id == id).ToList();
@@ -34,7 +43,7 @@ namespace InsurranceDemo.Controllers
         }
 
         /// <summary>
-        ///  共用的成功物件
+        ///  共用的成功回應物件
         /// </summary>
         private CommonSuccessReponse commonSuccessResponse = new CommonSuccessReponse();
 
@@ -60,11 +69,7 @@ namespace InsurranceDemo.Controllers
                 }
             }
 
-            var insurrance = new Insurrance();
-            insurrance.name = name;
-            insurrance.description = description;
-            insurrance.price = price;
-            insurrance.createTime = DateTime.Now;
+            var insurrance = InsurranceDataHelper.GetInsurrance(name, description, price);
             context.Insurrance.Add(insurrance);
 
             try
@@ -178,44 +183,7 @@ namespace InsurranceDemo.Controllers
             }
         }
 
-        /// <summary>
-        /// 取得使用者的保險清單
-        /// </summary>
-        /// <param name="serverData">資料庫的字串</param>
-        /// <returns>使用者的保險清單</returns>
-        public static List<ClientInsurrance> getCustomInsurrance(string serverData)
-        {
-            InsuranceCompanyEntities context = new InsuranceCompanyEntities();
-            List<Insurrance> allAvalibleInsurrance = context.Insurrance.Where(i => !i.isDelete).ToList();
-            Dictionary<long, Insurrance> dictInsurrance = new Dictionary<long, Insurrance>();
-            foreach (var item in allAvalibleInsurrance)
-            {
-                dictInsurrance.Add(item.id, item);
-            }
-
-
-            var result = new List<ClientInsurrance>();
-            string[] list = serverData.Split(',');
-            foreach (var item in list)
-            {
-                try
-                {
-                    long intValue = long.Parse(item);
-                    var insurrance = dictInsurrance[intValue];
-                    if (insurrance != null)
-                    {
-                        result.Add(new ClientInsurrance(insurrance)) ;
-                    }
-
-                }
-                catch (Exception)
-                {
-                    return result;
-                }
-            }
-
-            return result;
-        }
+       
     }
 
 }
