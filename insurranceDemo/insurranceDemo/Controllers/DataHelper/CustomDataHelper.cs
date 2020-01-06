@@ -13,6 +13,14 @@ namespace insurranceDemo.Controllers.DataHelper
     /// </summary>
     public class CustomDataHelper
     {
+        /// <summary>
+        /// 取得正確的客戶物件
+        /// </summary>
+        /// <param name="name">客戶姓名</param>
+        /// <param name="isMale">是否為男性</param>
+        /// <param name="identity">身分證</param>
+        /// <param name="address">地址</param>
+        /// <returns>客戶的物件</returns>
         public static Custom getValidCustom(string name, bool isMale, string identity, string address = "")
         {
                         
@@ -38,8 +46,7 @@ namespace insurranceDemo.Controllers.DataHelper
             newCustomer.isDelete = false;
             newCustomer.insuranceList = "";
             newCustomer.identity = identity;
-            newCustomer.createTime = DateTime.Now;
-            
+            newCustomer.createTime = DateTime.Now;            
             
             return newCustomer;
         }
