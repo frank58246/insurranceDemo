@@ -199,7 +199,6 @@ namespace InsurranceDemo.Controllers
             {
                 var errorResponse = new CommonErrorResponse(101, "要刪除的保單不存在!");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
-
             }
         }
        
