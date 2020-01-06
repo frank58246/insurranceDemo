@@ -11,6 +11,12 @@ namespace InsurranceDemo.Models
     /// </summary>
     public class ClientCustom
     {
+
+        /// <summary>
+        /// 會員ID
+        /// </summary>
+        public long Id = 0;
+
         /// <summary>
         /// 姓名
         /// </summary>
@@ -37,10 +43,10 @@ namespace InsurranceDemo.Models
         /// <param name="serverData">資料庫的model</param>
         public ClientCustom(Custom serverData)
         {
+            Id = serverData.id;
             Name = serverData.name;
             IsMale = serverData.isMale;
-            Address = serverData.addresss;            
-        
+            Address = serverData.addresss ?? "";           
         }
         
     }

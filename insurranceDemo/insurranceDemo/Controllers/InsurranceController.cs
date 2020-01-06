@@ -48,6 +48,19 @@ namespace InsurranceDemo.Controllers
         /// </summary>
         private CommonSuccessReponse commonSuccessResponse = new CommonSuccessReponse();
 
+
+        /// <summary>
+        /// 取得共用的失敗回應物件
+        /// </summary>
+        /// <param name="e">內部例外</param>
+        /// <returns>共用的失敗回應物件</returns>
+        private HttpResponseMessage getCommonErrorResponse(Exception e)
+        {
+            var errorResponse = new CommonErrorResponse(201, e.Message);
+            return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
+        }
+
+
         /// <summary>
         /// 新增保單
         /// </summary>
@@ -59,7 +72,7 @@ namespace InsurranceDemo.Controllers
         [HttpPost]
         [Route("AddInsurrance")]
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(ClientInsurrance))]
-        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(CommonErrorResponse))]
         public HttpResponseMessage AddInsurrance(string name, string description, decimal price) 
         {
             // 檢查有沒有重名
@@ -67,8 +80,8 @@ namespace InsurranceDemo.Controllers
             {
                 if (item.name == name)
                 {
-                   return Request.CreateResponse(HttpStatusCode.BadRequest, "保單名稱重複!");
-
+                    var errorResponse = new CommonErrorResponse(101, "保單名稱重複!");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
                 }
             }
 
@@ -83,8 +96,7 @@ namespace InsurranceDemo.Controllers
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
-                
+                return getCommonErrorResponse(e);
             }
         }
 
@@ -118,10 +130,9 @@ namespace InsurranceDemo.Controllers
         [HttpPost]
         [Route("UpdateInsurrance")]
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(CommonSuccessReponse))]
-        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(CommonErrorResponse))]
         public HttpResponseMessage UpdateInsurrance(long id, string name, string description,decimal price)
         {          
-
             var insurrance = getInsurranceBy(id);
             if (insurrance != null)
             {
@@ -130,7 +141,8 @@ namespace InsurranceDemo.Controllers
                 {
                     if (item.name == name && item.id != id)
                     {
-                        return Request.CreateResponse(HttpStatusCode.BadRequest, "修改失敗，保單名稱重複!");
+                        var errorResponse = new CommonErrorResponse(101, "修改失敗，保單名稱重複!");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
                     }
                 }
 
@@ -145,13 +157,13 @@ namespace InsurranceDemo.Controllers
                 }
                 catch (Exception e)
                 {
-                    return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+                    return getCommonErrorResponse(e);
                 }
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "請求的保單不存在!");
-
+                var errorResponse = new CommonErrorResponse(102, "請求的保單不存在!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
             }
 
         }
@@ -165,7 +177,7 @@ namespace InsurranceDemo.Controllers
         [HttpPost]
         [Route("DeleteInsurrance")]
         [SwaggerResponse(HttpStatusCode.OK, Type = typeof(CommonSuccessReponse))]
-        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(CommonErrorResponse))]
         public HttpResponseMessage DeleteInsurrance(long id)
         {
             var insurrance = getInsurranceBy(id);
@@ -180,13 +192,13 @@ namespace InsurranceDemo.Controllers
                 }
                 catch (Exception e)
                 {
-
-                    return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+                    return getCommonErrorResponse(e);
                 }
             }
             else 
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "要刪除的保單不存在!");
+                var errorResponse = new CommonErrorResponse(101, "要刪除的保單不存在!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, errorResponse);
 
             }
         }
