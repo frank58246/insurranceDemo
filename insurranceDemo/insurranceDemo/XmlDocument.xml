@@ -572,6 +572,13 @@
              共用的成功回應物件
             </summary>
         </member>
+        <member name="M:InsurranceDemo.Controllers.InsurranceController.getCommonErrorResponse(System.Exception)">
+            <summary>
+            取得共用的失敗回應物件
+            </summary>
+            <param name="e">內部例外</param>
+            <returns>共用的失敗回應物件</returns>
+        </member>
         <member name="M:InsurranceDemo.Controllers.InsurranceController.AddInsurrance(System.String,System.String,System.Decimal)">
             <summary>
             新增保單
@@ -608,6 +615,11 @@
         <member name="T:InsurranceDemo.Models.ClientCustom">
             <summary>
             丟給Client端的客戶物件
+            </summary>
+        </member>
+        <member name="F:InsurranceDemo.Models.ClientCustom.Id">
+            <summary>
+            會員ID
             </summary>
         </member>
         <member name="F:InsurranceDemo.Models.ClientCustom.Name">
