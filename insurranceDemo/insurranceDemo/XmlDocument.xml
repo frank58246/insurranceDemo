@@ -510,6 +510,13 @@
             <param name="id">要查詢的用戶id</param>
             <returns>指定的用戶</returns>
         </member>
+        <member name="M:InsurranceDemo.Controllers.CustomController.GetCustomList(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            取得指定id列表的客戶資料
+            </summary>
+            <param name="idList">要查詢的id列表</param>
+            <returns>指定id列表的客戶清單</returns>
+        </member>
         <member name="M:InsurranceDemo.Controllers.CustomController.AddCustom(System.String,System.Boolean,System.String,System.String)">
             <summary>
             新增客戶

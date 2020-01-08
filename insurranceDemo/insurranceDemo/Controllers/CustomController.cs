@@ -65,7 +65,30 @@ namespace InsurranceDemo.Controllers
             }
         }
 
-        
+        /// <summary>
+        /// 取得指定id列表的客戶資料
+        /// </summary>
+        /// <param name="idList">要查詢的id列表</param>
+        /// <returns>指定id列表的客戶清單</returns>
+        [HttpPost]
+        [Route("GetCustomList")]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(List<ClientCustom>))]
+        public HttpResponseMessage GetCustomList(List<int> idList)
+        {
+            var result = new List<ClientCustom>();
+
+            foreach (var id in idList)
+            {
+                var client = getCustomBy(id);
+                if (client != null)
+                {
+                    result.Add(new ClientCustom(client));
+                }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         /// <summary>
         /// 新增客戶
         /// </summary>
